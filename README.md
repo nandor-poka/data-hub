@@ -30,6 +30,9 @@ After this your instance of the notebook image running the jupyter-lab interface
 
 **Important running the image without mounting any local directory will have limited persistence. To mout your home directory (assuming Linux operating system) use the following argument in the command line: `-v {path-to-your-homedir}:/home/biodatahub/data`. This will mount the directory you specify as `{path-to-your-homedir}` into the container under the path `/home/biodatahub/data` as read-write.**
 
+The whole comand to start the container with mounted directory is:
+`docker run --name datahub-bio-notebook -p 8888:8888  -v {path-to-your-homedir}:/home/biodatahub/data datahubproject/datahub:bio-notebook-standalone`
+
 ## Environment
 
 ### Base
