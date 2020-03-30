@@ -14,35 +14,21 @@ If you need help with the JupyterLab / Jupyter Notebook, please visit their webs
 https://jupyterlab.readthedocs.io/en/stable/user/interface.html
 https://jupyter-notebook.readthedocs.io/en/stable/notebook.html#notebook-user-interface
 
+# How to run
 
-## IMPORTANT NOTICE
+The core of the project, that is the jupyter-notebook image, can be run standalone using docker. If you don't have Docker please refer to the following website on how to install it: https://docs.docker.com/install/ .
 
-Please note that this service is in very early stage of development, and **changes will come unannounced.** 
+Once you have Docker installed you can run the standalone version of the notebook image with the following command:
+`docker run --name datahub-bio-notebook -p 8888:8888 datahubproject/datahub:bio-notebook-standalone`
 
-Please keep in mind the following:
- 
- - Every user is provided with a sandboxed environment (Docker container)
- - Changes during maintenance may corrupt or delete your work
- - Use the `private` directory to save your work.
-   This directory resides on the server outside the container.
- - Your personal container is shut down (but not deleted!)
-   when you log out to free up resources for other users.
- - Use the `public` directory to share your work / files with others.
-   This directory is also persistent, and is synchronized with the
-   `shared` directory.
- - The `shared` directory is where you find files shared by others.
-   This directory is accessible to every user, but is read-only.
-   If you want to modify these files you have to make a copy to your 
-   own directories and work there.
- - Idle containers will be terminated, to free up resources
- 
+Explanation:
 
-Every user is provided with a sandboxed environment (Docker container), and the containers may be destroyed during updates / upgrades. **Data saved in the `private` and `public` directories are saved outside this container** to the persistent storage of the underlying server, thus will survive deletion of the container. 
+--name       --> optional argument to name the container for easier identification later on
+-p 8888:8888 --> publish the internal port 8888 to localhost:8888
 
-The `public` directory is for sharing work with others.
-Each user is provided with their own instance of this directory that they can use to put data / files they wish to share with others. The contents of this directory are synchronized with a common `shared` folder.
+After this your instance of the notebook image running the jupyter-lab interface and all the pre-installed goodies will be reachable at `http://localhost:8888/`
 
-The `shared` folder is accessible by every user, and it contains the union of every user's `public` folder. This folder is mounted as read-only. This prevents concurrent modification and accidental overwriting of other's work.  If you need to make adjustments to someone else's work please make copy of it into your own private folder, and apply your modifications there.
+**Important running the image without mounting any local directory will have limited persistence. To mout your home directory (assuming Linux operating system) use the following argument in the command line: `-v {path-to-your-homedir}:/home/biodatahub/data`. This will mount the directory you specify as `{path-to-your-homedir}` into the container under the path `/home/biodatahub/data` as read-write.**
 
 ## Environment
 
