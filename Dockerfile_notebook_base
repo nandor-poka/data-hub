@@ -1,0 +1,62 @@
+FROM python:3.7.7-buster
+
+# Base python packages for jupyter*
+RUN pip3 install \
+    jupyterhub==1.1.0 \
+    jupyterlab==2.1.0 \
+    ipywidgets==7.5.1 \ 
+    notebook==6.0.3 \
+    rise==5.6.1
+
+# Installing R and Biocondutor
+
+RUN echo 'deb [trusted=yes] https://ftp.fau.de/cran/bin/linux/debian buster-cran35/' >> /etc/apt/sources.list
+RUN apt-get update --allow-unauthenticated
+RUN apt-get install -y r-base
+
+# create a user, since we don't want to run as root
+RUN useradd -m biodatahub
+ENV HOME=/home/biodatahub
+WORKDIR $HOME
+
+ADD ./install_R_packages.r $HOME/install_R_packages.r
+RUN chmod +x $HOME/install_R_packages.r
+RUN Rscript $HOME/install_R_packages.r
+RUN rm $HOME/install_R_packages.r
+RUN chown -R biodatahub:biodatahub $HOME
+
+# Extras
+RUN pip3 install \
+    biopython==1.76 \
+    pandas==0.25.1 \
+    numpy==1.17.2 \
+    matplotlib==3.1.1 \
+    scipy==1.3.1 \  
+    scikit-image==0.15.0 \
+    scikit-learn==0.21.3 \
+    statsmodels==0.10.1 \
+    bokeh==2.0.0 \
+    xmltramp2 \
+    requests 
+
+RUN wget https://github.com/jgm/pandoc/releases/download/2.9.2/pandoc-2.9.2-1-amd64.deb
+RUN dpkg -i pandoc-2.9.2-1-amd64.deb
+RUN apt-get install -y texlive-xetex texlive-fonts-recommended texlive-generic-recommended
+RUN rm pandoc-2.9.2-1-amd64.deb
+
+
+#adding binaries
+ENV PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:$HOME/tools:$HOME/EMBL-Tools:$HOME/EMBL-Tools/ebml_client
+RUN mkdir -p $HOME/tools
+ADD ./tools $HOME/tools
+
+
+RUN apt-get install -y  nodejs npm git
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+
+ADD https://api.github.com/repos/nandor-poka/embl_tools/git/refs/heads/master embl_tools_version.json
+RUN git clone -b master https://github.com/nandor-poka/embl_tools.git $HOME/EMBL-Tools
+RUN cd $HOME/EMBL-Tools && pip3 install -r requirements.txt
+
+RUN pip3 install embl-tools-jl==0.1.7
+RUN jupyter lab build
