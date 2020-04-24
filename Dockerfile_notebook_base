@@ -58,5 +58,5 @@ ADD https://api.github.com/repos/nandor-poka/embl_tools/git/refs/heads/master em
 RUN git clone -b master https://github.com/nandor-poka/embl_tools.git $HOME/EMBL-Tools
 RUN cd $HOME/EMBL-Tools && pip3 install -r requirements.txt
 
-RUN pip3 install embl-tools-jl==0.1.7
+RUN pip3 install embl-tools-jl==0.1.8
 RUN jupyter lab build
