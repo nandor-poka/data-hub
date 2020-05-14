@@ -35,7 +35,7 @@ RUN cd /opt && wget https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1
 
 ADD ./install_Julia_packages.jl $HOME/install_Julia_packages.jl
 RUN chmod +x $HOME/install_Julia_packages.jl
-RUN julia install_Julia_packages.jl
+RUN /opt/julia-1.4.1/bin/julia install_Julia_packages.jl
 
 # Extras
 RUN pip3 install \
