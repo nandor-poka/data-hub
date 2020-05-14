@@ -3,7 +3,7 @@ FROM datahubproject/datahub:bio-notebook-base
 ADD ./internal_README.MD $HOME/README.MD
 RUN mkdir /home/biodatahub/private
 RUN mkdir /home/biodatahub/public
-#RUN mkdir /home/biodatahub/shared
+
 
 RUN chown -R biodatahub:biodatahub $HOME
 
