@@ -79,4 +79,4 @@ RUN pip3 install embl-tools-jl==0.2.1
 RUN jupyter lab build
 
 # Cleanup
-RUN rm embl_tools_version.json debug.log
+RUN rm embl_tools_version.json 
