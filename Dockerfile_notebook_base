@@ -39,6 +39,7 @@ RUN chmod +x $HOME/install_Julia_packages.jl
 USER biodatahub
 RUN julia install_Julia_packages.jl
 RUN rm $HOME/install_Julia_packages.jl
+ADD ./nfunfu7T_79Wjh.ji $HOME/.julia/compiled/v1.4/IJulia/nfu7T_79Wjh.ji
 
 USER root
 # Extras
