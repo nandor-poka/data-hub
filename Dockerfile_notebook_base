@@ -34,14 +34,14 @@ RUN cd /opt && wget https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1
     && tar -xvzf julia-1.4.1-linux-x86\_64.tar.gz && ln -s /opt/julia-1.4.1/bin/julia /bin/julia
 
 
-ADD ./install_Julia_packages.jl $HOME/install_Julia_packages.jl
-RUN chmod +x $HOME/install_Julia_packages.jl
-USER biodatahub
-RUN julia install_Julia_packages.jl
-RUN rm $HOME/install_Julia_packages.jl
-ADD ./nfu7T_79Wjh.ji $HOME/.julia/compiled/v1.4/IJulia/nfu7T_79Wjh.ji
+#ADD ./install_Julia_packages.jl $HOME/install_Julia_packages.jl
+#RUN chmod +x $HOME/install_Julia_packages.jl
+#USER biodatahub
+#RUN julia install_Julia_packages.jl
+#RUN rm $HOME/install_Julia_packages.jl
+#ADD ./nfu7T_79Wjh.ji $HOME/.julia/compiled/v1.4/IJulia/nfu7T_79Wjh.ji
 
-USER root
+#USER root
 # Extras
 RUN pip3 install \
     biopython==1.76 \
