@@ -1,10 +1,10 @@
 FROM datahubproject/datahub:bio-notebook-base
 
 ADD ./internal_README.MD $HOME/README.MD
-RUN chown -R biodatahub:biodatahub $HOME
+RUN fix-permissions /home/$NB_USER
 
 USER biodatahub
 
 EXPOSE 8888
-
+ENTRYPOINT ["tini", "-g", "--"]
 CMD jupyter-lab --ip=0.0.0.0
