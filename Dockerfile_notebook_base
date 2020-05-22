@@ -187,6 +187,8 @@ RUN mkdir -p $HOME/tools
 ADD ./tools $HOME/tools
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+RUN pip install embl-tools-jl==0.2.4 \
+    && jupyter lab build
 
 # Adding latest EMBL-Tools from github
 ADD https://api.github.com/repos/nandor-poka/embl_tools/git/refs/heads/master embl_tools_version.json
@@ -194,8 +196,38 @@ RUN git clone -b master https://github.com/nandor-poka/embl_tools.git $HOME/EMBL
     && cd $HOME/EMBL-Tools && pip install -r requirements.txt \
     && cd .. && rm embl_tools_version.json 
 
-RUN pip install embl-tools-jl==0.2.2 \
-    && jupyter lab build
+
 
 RUN rm -rf /home/$NB_USER/.cache/yarn
 ENV PYTHONPATH=$HOME/EMBL-Tools:$HOME/EMBL-Tools/ebml_client/
+
+# Install SoS notebook and kernel modules
+USER root
+ADD  https://api.github.com/repos/nandor-poka/sos/git/refs/heads/master /opt/sos.json
+RUN cd /opt && git clone https://github.com/nandor-poka/sos.git \
+    && cd sos && pip install .
+
+ADD  https://api.github.com/repos/nandor-poka/sos-notebook/git/refs/heads/master /opt/sos-notebook.json
+RUN cd /opt && git clone https://github.com/nandor-poka/sos-notebook.git \
+    && cd sos-notebook && pip install .
+
+ADD  https://api.github.com/repos/nandor-poka/markdown-kernel/git/refs/heads/master /opt/markdown-kernel.json
+RUN cd /opt && git clone https://github.com/nandor-poka/markdown-kernel.git \
+    && cd markdown-kernel && pip install .
+
+ADD  https://api.github.com/repos/nandor-poka/sos-python/git/refs/heads/master /opt/sos-python.json
+RUN cd /opt && git clone https://github.com/nandor-poka/sos-python.git \
+    && cd sos-python && pip install .
+
+ADD  https://api.github.com/repos/nandor-poka/sos-julia/git/refs/heads/master /opt/sos-julia.json
+RUN cd /opt && git clone https://github.com/nandor-poka/sos-julia.git \
+    && cd sos-julia && pip install .
+
+
+ADD  https://api.github.com/repos/nandor-poka/sos-java/git/refs/heads/master /opt/sos-java.json
+RUN cd /opt && git clone https://github.com/nandor-poka/sos-java.git \
+    && cd sos-java && pip install .
+
+ADD  https://api.github.com/repos/nandor-poka/sos-r/git/refs/heads/master /opt/sos-r.json
+RUN cd /opt && git clone https://github.com/nandor-poka/sos-r.git \
+    && cd sos-r && pip install .
