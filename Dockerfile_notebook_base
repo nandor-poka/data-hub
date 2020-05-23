@@ -209,11 +209,17 @@ RUN cd /opt && git clone https://github.com/nandor-poka/sos.git \
 
 ADD  https://api.github.com/repos/nandor-poka/sos-notebook/git/refs/heads/master /opt/sos-notebook.json
 RUN cd /opt && git clone https://github.com/nandor-poka/sos-notebook.git \
-    && cd sos-notebook && pip install .
+    && cd sos-notebook && pip install . && python -m sos_notebook.install \
+    && mv /usr/local/share/jupyter/kernels/sos $CONDA_DIR/share/jupyter/kernels/
+
+RUN pip install sos-papermill \
+    && jupyter labextension install transient-display-data \
+    && jupyter labextension install jupyterlab-sos 
 
 ADD  https://api.github.com/repos/nandor-poka/markdown-kernel/git/refs/heads/master /opt/markdown-kernel.json
 RUN cd /opt && git clone https://github.com/nandor-poka/markdown-kernel.git \
-    && cd markdown-kernel && pip install .
+    && cd markdown-kernel && pip install . && python -m markdown_kernel.install \
+    && && mv /usr/local/share/jupyter/kernels/markdown $CONDA_DIR/share/jupyter/kernels/
 
 ADD  https://api.github.com/repos/nandor-poka/sos-python/git/refs/heads/master /opt/sos-python.json
 RUN cd /opt && git clone https://github.com/nandor-poka/sos-python.git \
