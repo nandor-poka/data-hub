@@ -191,10 +191,10 @@ RUN pip install embl-tools-jl==0.2.4 \
     && jupyter lab build
 
 # Adding latest EMBL-Tools from github
-ADD https://api.github.com/repos/nandor-poka/embl_tools/git/refs/heads/master /opt/embl_tools_version.json
+ADD https://api.github.com/repos/nandor-poka/embl_tools/git/refs/heads/master embl_tools_version.json
 RUN git clone -b master https://github.com/nandor-poka/embl_tools.git $HOME/EMBL-Tools \
     && cd $HOME/EMBL-Tools && pip install -r requirements.txt \
-    && rm /opt/embl_tools_version.json 
+    && cd .. && rm embl_tools_version.json 
 
 RUN rm -rf /home/$NB_USER/.cache/yarn
 ENV PYTHONPATH=$HOME/EMBL-Tools:$HOME/EMBL-Tools/ebml_client/
