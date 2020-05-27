@@ -234,7 +234,7 @@ RUN cd /opt && git clone https://github.com/nandor-poka/sos-julia.git \
 
 ADD  https://api.github.com/repos/nandor-poka/sos-java/git/refs/heads/master /opt/sos-java.json
 RUN cd /opt && git clone https://github.com/nandor-poka/sos-java.git \
-    && cd sos-java && pip install . \
+    && cd sos-java && pip install -e . \
     && rm /opt/sos-java.json
 
 ADD  https://api.github.com/repos/nandor-poka/sos-r/git/refs/heads/master /opt/sos-r.json
