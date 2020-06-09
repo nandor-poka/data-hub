@@ -187,7 +187,7 @@ RUN mkdir -p $HOME/tools
 ADD ./tools $HOME/tools
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-RUN pip install embl-tools-jl==0.2.7 \
+RUN pip install embl-tools-jl==0.2.8 \
     && jupyter lab build
 
 # Adding latest EMBL-Tools from github
