@@ -132,11 +132,7 @@ RUN conda install --yes \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER && \
     pip install \
-    ggplot==0.11.5 \
     plotly==4.8.1
-
-
-
 
 # Installing Biocondutor
 USER root
@@ -180,7 +176,9 @@ RUN mkdir /etc/julia && \
 USER $NB_UID
 
 RUN julia -e 'import Pkg; Pkg.update()' && \
-    julia -e 'import Pkg; Pkg.add("HDF5")' && \
+    julia -e 'import Pkg; Pkg.add("Plots"); Pkg.precompile();' && \
+    julia -e 'import Pkg; Pkg.add("CSV"); Pkg.precompile();' && \
+    julia -e 'import Pkg; Pkg.add("DataFrames"); Pkg.precompile()' && \
     julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
     # move kernelspec out of home \
     mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
@@ -192,7 +190,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
 RUN mkdir -p $HOME/tools
 ADD ./tools $HOME/tools
 
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager && jupyter labextension install jupyterlab-plotly
 RUN pip install embl-tools-jl==0.3.3 \
     && jupyter lab build
 
