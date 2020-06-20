@@ -175,11 +175,11 @@ RUN mkdir /etc/julia && \
 
 USER $NB_UID
 
-RUN julia -e 'import Pkg; Pkg.update()' && \
-    julia -e 'import Pkg; Pkg.add("Plots"); Pkg.precompile();' && \
-    julia -e 'import Pkg; Pkg.add("CSV"); Pkg.precompile();' && \
-    julia -e 'import Pkg; Pkg.add("DataFrames"); Pkg.precompile()' && \
-    julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
+RUN julia -e 'using Pkg; Pkg.update()' && \
+    julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.precompile();' && \
+    julia -e 'using Pkg; Pkg.add("Plots"); Pkg.precompile();' && \
+    julia -e 'using Pkg; Pkg.add("CSV"); Pkg.precompile();' && \
+    julia -e 'using Pkg; Pkg.add("DataFrames"); Pkg.precompile();' && \
     # move kernelspec out of home \
     mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
