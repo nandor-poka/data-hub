@@ -181,6 +181,7 @@ RUN julia -e 'using Pkg; Pkg.update()' && \
     julia -e 'using Pkg; Pkg.add("CSV"); Pkg.precompile();' && \
     julia -e 'using Pkg; Pkg.add("DataFrames"); Pkg.precompile();' && \
     julia -e 'using Pkg; Pkg.add("PlotlyJS"); Pkg.precompile();' && \
+    julia -e 'using Pkg; Pkg.add("ORCA"); Pkg.precompile();' && \
     # move kernelspec out of home \
     mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
