@@ -194,7 +194,7 @@ ADD ./tools $HOME/tools
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager && jupyter labextension install jupyterlab-plotly
 RUN pip install embl-tools-jl==0.3.3 \
-    jupyterlab_bookmarks_extension==0.5.3
+    jupyterlab_bookmarks_extension==0.5.4
     && jupyter lab build
 
 # Adding latest EMBL-Tools from github
