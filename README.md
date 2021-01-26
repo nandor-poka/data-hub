@@ -37,14 +37,14 @@ The whole comand to start the container with mounted directory is:
 
 ### Base
 - Python 3.7 kernel
-- Biopython 1.76
+- Biopython 1.78
 - R 3.6.3 Kernel
 - Bioconductor package manager
 - File upload size limit 100 MB
 
 ### Python packages
-- pandas 0.25.1
-- numpy 1.17.2 
+- pandas 1.2.1
+- numpy 1.19.5 
 - matplotlib 3.1.1 
 - scipy 1.3.1  
 - scikit-image 0.15.0 
